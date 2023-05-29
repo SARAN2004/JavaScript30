@@ -25,6 +25,7 @@
     }
 
     .panels {
+      display:flex;
       min-height: 100vh;
       overflow: hidden;
     }
@@ -34,7 +35,6 @@
       box-shadow: inset 0 0 0 5px rgba(255,255,255,0.1);
       color: white;
       text-align: center;
-      align-items: center;
       /* Safari transitionend event.propertyName === flex */
       /* Chrome + FF transitionend event.propertyName === flex-grow */
       transition:
@@ -44,6 +44,12 @@
       font-size: 20px;
       background-size: cover;
       background-position: center;
+      flex:1;
+      justify-content: center;
+      align-items: center;
+      display: flex;
+      flex-direction: column;
+
     }
 
     .panel1 { background-image:url(https://source.unsplash.com/gYl-UtwNg_I/1500x1500); }
@@ -51,13 +57,26 @@
     .panel3 { background-image:url(https://images.unsplash.com/photo-1465188162913-8fb5709d6d57?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&cs=tinysrgb&w=1500&h=1500&fit=crop&s=967e8a713a4e395260793fc8c802901d); }
     .panel4 { background-image:url(https://source.unsplash.com/ITjiVXcwVng/1500x1500); }
     .panel5 { background-image:url(https://source.unsplash.com/3MNzGlQM7qs/1500x1500); }
+    .panel6 { background-image:url(https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1740&q=80); }
+    .panel7 { background-image:url(https://ca.slack-edge.com/T032648LE-U041NKC6B7Y-8ff5070db1ab-512); }
+
 
     /* Flex Children */
     .panel > * {
       margin: 0;
       width: 100%;
       transition: transform 0.5s;
+      flex: 1 0 auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
+
+.panel > *:first-child{transform:  translateY(-100%);}
+.panel.open-active > *:first-child{transform:  translateY(0);}
+.panel > *:last-child{transform:  translateY(100%);}
+.panel.open-active > *:last-child{transform:  translateY(0);}
+
 
     .panel p {
       text-transform: uppercase;
@@ -71,6 +90,7 @@
     }
 
     .panel.open {
+      flex:5;
       font-size: 40px;
     }
 
@@ -103,9 +123,35 @@
       <p>In</p>
       <p>Motion</p>
     </div>
+    <div class="panel panel6">
+      <p>We</p>
+      <p>Are</p>
+      <p>Fssa students</p>
+    </div>
+    <div class="panel panel7">
+      <p>I</p>
+      <p>AM</p>
+      <p>Saran</p>
+    </div>
   </div>
 
   <script>
+let panels = document.querySelectorAll('.panel')
+
+function toggleopen(e){
+  this.classList.toggle('open')
+}
+function toggleactive(e){
+  if(e.propertyName.includes('flex')){
+    this.classList.toggle('open-active')
+  }
+
+  
+}
+
+panels.forEach(panel => panel.addEventListener('click', toggleopen));
+panels.forEach(panel => panel.addEventListener('transitionend', toggleactive));
+
 
   </script>
 
